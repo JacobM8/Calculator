@@ -30,7 +30,14 @@ class ViewController: UIViewController {
             return number
         }
         set {
-            displayLabel.text = String(newValue)
+            // if displayValue ends in '.0' don't show .0
+            if newValue.truncatingRemainder(dividingBy: 1) == 0 {
+                displayLabel.text! = String(newValue).components(separatedBy: ".")[0]
+            }
+            else {
+                displayLabel.text = String(newValue)
+            }
+            
         }
     }
     private var calculator = CalculatorLogic()
@@ -41,10 +48,12 @@ class ViewController: UIViewController {
         calculator.setNumber(displayValue)
               
         if let calcMethod = sender.currentTitle {
-            guard let result = calculator.calculate(calcMethod) else {
-                fatalError("Result of calculation is nil")
+            // guarding agains really bad things from happening, something that should never happen
+            // if let vast majority of the time, it should be there but if not we will just ignore it,
+            // in this case it is if the user hits '=' without a number and calculation symbol
+            if let result = calculator.calculate(calcMethod) {
+                displayValue = result
             }
-            displayValue = result
         }
     }
     
@@ -67,6 +76,7 @@ class ViewController: UIViewController {
                         return
                     }
                 }
+                
                 displayLabel.text! += numValue
             }
         }
