@@ -34,27 +34,21 @@ class ViewController: UIViewController {
         }
     }
     
-    
     @IBAction func calcButtonPressed(_ sender: UIButton) {
-        //What should happen when a non-number button is pressed
+        // What should happen when a non-number button is pressed
         isFinishedTypingNumber = true
-        
+              
         if let calcMethod = sender.currentTitle {
-            if calcMethod == "AC" {
-                displayValue = 0
+            let calculator = CalculatorLogic(number: displayValue)
+            guard let result = calculator.calculate(calcMethod) else {
+                fatalError("Result of calculation is nil")
             }
-            else if calcMethod == "+/-" {
-                displayValue *= -1
-            }
-            else if calcMethod == "%" {
-                displayValue /= 100
-            }
+            displayValue = result
         }
     }
-
     
     @IBAction func numButtonPressed(_ sender: UIButton) {
-        //What should happen when a number is entered into the keypad
+        // What should happen when a number is entered into the keypad
         if let numValue = sender.currentTitle {
             
             if isFinishedTypingNumber {
@@ -73,7 +67,6 @@ class ViewController: UIViewController {
                     }
                 }
                 displayLabel.text! += numValue
-                displayLabel.text = (displayLabel.text! + numValue).replacingOccurrences(of: "..", with: ".")
             }
         }
     }
