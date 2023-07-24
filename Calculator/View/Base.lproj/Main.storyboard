@@ -291,6 +291,10 @@
                     </view>
                     <connections>
                         <outlet property="displayLabel" destination="DNs-Te-SYH" id="yPw-AA-KVx"/>
+                        <outlet property="divideButton" destination="Zaj-7n-tnu" id="vPr-PQ-BDs"/>
+                        <outlet property="minusButton" destination="tl6-cP-h4R" id="m8t-qq-5C5"/>
+                        <outlet property="multiplyButton" destination="bHC-Nb-qEg" id="2jc-St-3bG"/>
+                        <outlet property="plusButton" destination="IqC-zJ-g7e" id="RoY-ND-zZC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b3E-z2-QY8" sceneMemberID="firstResponder"/>

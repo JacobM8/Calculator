@@ -12,6 +12,10 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var displayLabel: UILabel!
+    @IBOutlet weak var divideButton: UIButton!
+    @IBOutlet weak var multiplyButton: UIButton!
+    @IBOutlet weak var minusButton: UIButton!
+    @IBOutlet weak var plusButton: UIButton!
     // Sift access levels for classes and variables
     // private: only available in scope it is declared, between {}
     // fileprivate: only available in the file it is declared
@@ -37,18 +41,18 @@ class ViewController: UIViewController {
             else {
                 displayLabel.text = String(newValue)
             }
-            
         }
     }
     private var calculator = CalculatorLogic()
     
     @IBAction func calcButtonPressed(_ sender: UIButton) {
         // What should happen when a non-number button is pressed
+        setCalcButtonBackgroundColor(sender)
         isFinishedTypingNumber = true
         calculator.setNumber(displayValue)
               
         if let calcMethod = sender.currentTitle {
-            // guarding agains really bad things from happening, something that should never happen
+            // guard let guards against really bad things from happening, something that should never happen
             // if let vast majority of the time, it should be there but if not we will just ignore it,
             // in this case it is if the user hits '=' without a number and calculation symbol
             if let result = calculator.calculate(calcMethod) {
@@ -59,6 +63,7 @@ class ViewController: UIViewController {
     
     @IBAction func numButtonPressed(_ sender: UIButton) {
         // What should happen when a number is entered into the keypad
+        setCalcButtonsToOriginalColor()
         if let numValue = sender.currentTitle {
             
             if isFinishedTypingNumber {
@@ -80,6 +85,24 @@ class ViewController: UIViewController {
                 displayLabel.text! += numValue
             }
         }
+    }
+    
+    private func setCalcButtonBackgroundColor(_ sender: UIButton) {
+        
+        if sender.currentTitle == "+"
+            || sender.currentTitle == "-"
+            || sender.currentTitle == "×"
+            || sender.currentTitle == "÷" {
+            sender.backgroundColor = UIColor(red: 255/255, green: 225/255, blue: 0/255, alpha: 1)
+        }
+    }
+    
+    private func setCalcButtonsToOriginalColor() {
+        
+        plusButton.backgroundColor = UIColor(red: 255/255, green: 147/255, blue: 0, alpha: 1)
+        minusButton.backgroundColor = UIColor(red: 255/255, green: 147/255, blue: 0, alpha: 1)
+        multiplyButton.backgroundColor = UIColor(red: 255/255, green: 147/255, blue: 0, alpha: 1)
+        divideButton.backgroundColor = UIColor(red: 255/255, green: 147/255, blue: 0, alpha: 1)
     }
 }
 

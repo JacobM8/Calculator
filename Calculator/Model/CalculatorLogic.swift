@@ -11,7 +11,7 @@ import Foundation
 struct CalculatorLogic {
     
     private var number: Double?
-    private var intermediateCalculation: (n1: Double, calcMethod: String)?
+    private var intermediateCalculation: (n1: Double, calcMethod: String?)?
     
     mutating func setNumber(_ number: Double) {
         self.number = number
@@ -22,6 +22,7 @@ struct CalculatorLogic {
         if let n = number {
             switch symbol {
             case "AC":
+                intermediateCalculation = (n1: 0, calcMethod: nil)
                 return 0
             case "+/-":
                 return n * -1
@@ -30,7 +31,11 @@ struct CalculatorLogic {
             case "=":
                 return performTwoNumCalculation(n2: n)
             default:
-                intermediateCalculation = (n1: n, calcMethod: symbol)
+                if intermediateCalculation?.calcMethod != nil && intermediateCalculation?.n1 != nil{
+                    number = performTwoNumCalculation(n2: n)
+                }
+                intermediateCalculation = (n1: number!, calcMethod: symbol)
+                return number
             }
         }
         
